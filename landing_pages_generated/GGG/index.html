@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="product-container">
+        <header>
+            <input type="text" id="p_id" value="684f5f56506522700921036f" hidden>
+            <h1>P1</h1>
+            <p class="subtitle">TEST </p>
+        </header>
+
+        <section class="product-showcase">
+            <div class="gallery">
+                <img src="../../uploads/productImg1-productimg1-sc57a91e6dd8044ad9f2e76ea19ffa3bdq-1750016258668-206043953-1750032214274-206823847.webp" alt="P1" class="active">
+                <img src="../../uploads/productImg2-productimg1-44-t55-android-ios-zwero-yes-original-imagmrxg8fznyqkg-1750018937803-568301072-1750032214277-839746685.webp" alt="P1 feature">
+                <img src="../../uploads/productImg3-productimg1-screenshot-2024-11-18-141248-1749389813669-645696261-1750032214283-877987267.png" alt="P1 in use">
+            </div>
+            <div class="product-details">
+                <h2>TSTTSTTS</h2>
+                <ul class="features">
+                    <li>GFHG</li>
+                    <li>GNH</li>
+                    <li>JHMMV</li>
+                </ul>
+                <div class="price-section">
+                    <label class="dhs">Price: </label>
+                    <span class="price-tag">200</span> 
+                    <span class="dhs">DHs</span>
+                </div>
+                <ul class="peyementModeListSection">
+                    <h6>Payment Methods:</h6>
+
+                    <li>
+                        <input type="radio" name="payementMode" id="Visa-Card" value="Visa Card"/>
+                        <i class="fab fa-cc-visa"></i>
+                        <label for="Visa-Card">Visa Card</label>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="payementMode" id="Cash-On-Delivery" value="Cash On Delivery"/>
+                        <i class="fas fa-money-bill-wave"></i>
+                        <label for="Cash-On-Delivery">Cash On Delivery</label>
+                    </li>
+                </ul>
+                <button class="buy-button" id="buyNowBtn">
+                    <i class="fas fa-shopping-cart"></i> Acheter maintenant
+                </button>
+            </div>
+        </section>
+        <footer>
+            <p>&copy; 2025 Electro Space. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Payment method selection
+            const paymentOptions = document.querySelectorAll('.peyementModeListSection li');
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    paymentOptions.forEach(opt => {
+                        opt.style.borderColor = '#eee';
+                        opt.querySelector('i').style.color = 'var(--dark-color)';
+                        opt.querySelector('label').style.color = 'var(--dark-color)';
+                    });
+                    
+                    this.style.borderColor = 'var(--primary-color)';
+                    this.querySelector('i').style.color = 'var(--primary-color)';
+                    this.querySelector('label').style.color = 'var(--primary-color)';
+                });
+            });
+            
+            // Image gallery functionality
+            const galleryImages = document.querySelectorAll('.gallery img');
+            if (galleryImages.length > 1) {
+                galleryImages.forEach(img => {
+                    img.addEventListener('click', function() {
+                        // Move clicked image to main position
+                        const activeImg = document.querySelector('.gallery img.active');
+                        const tempSrc = activeImg.src;
+                        const tempAlt = activeImg.alt;
+                        
+                        activeImg.src = this.src;
+                        activeImg.alt = this.alt;
+                        activeImg.classList.remove('active');
+                        
+                        this.src = tempSrc;
+                        this.alt = tempAlt;
+                        this.classList.add('active');
+                    });
+                });
+            }
+            
+            // Buy button animation
+            const buyButton = document.getElementById('buyNowBtn');
+            buyButton.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            buyButton.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

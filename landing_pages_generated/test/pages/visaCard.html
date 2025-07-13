@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Payment</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .payment-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .payment-header h2 {
+            color: #1a1f71; /* Visa blue */
+            margin-bottom: 10px;
+        }
+        
+        .payment-header p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .card-logos {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .card-logos img {
+            height: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .card-input {
+            position: relative;
+        }
+        
+        .card-input img {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            height: 25px;
+        }
+        
+        .pay-btn {
+            background-color: #1a1f71; /* Visa blue */
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .pay-btn:hover {
+            background-color: #0f1357;
+        }
+        
+        .security-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .security-info img {
+            height: 20px;
+        }
+        
+        .alternative-payment {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .alternative-payment a {
+            color: #1a1f71;
+            text-decoration: none;
+        }
+        
+        .alternative-payment a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <div class="card-logos">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" style="height: 25px; margin-top: 2px;">
+            </div>
+            <h2>Credit Card Payment</h2>
+            <p>Enter your card details securely</p>
+        </div>
+        
+        <form id="card-payment-form">
+            <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <div class="card-input">
+                    <input type="text" id="card-number" name="card-number" required placeholder="1234 5678 9012 3456" pattern="[0-9\s]{13,19}" maxlength="19">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" id="card-type-icon">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="card-name">Name on Card</label>
+                <input type="text" id="card-name" name="card-name" required placeholder="Ayoub Bouchkara">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiry-date">Expiry Date</label>
+                    <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/?([0-9]{2})">
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" required placeholder="123" pattern="[0-9]{3,4}" maxlength="4">
+                </div>
+            </div>
+            
+            <button type="submit" class="pay-btn">
+                Pay Now
+            </button>
+            
+            <div class="security-info">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Verified_by_Visa.svg/1200px-Verified_by_Visa.svg.png" alt="Secure payment">
+                <span>Your payment is secure and encrypted</span>
+            </div>
+            
+            <div class="alternative-payment">
+                <p>Prefer PayPal? <a href="paypal-form.html">Pay with PayPal instead</a></p>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('card-payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would typically process the payment
+            // For a real implementation, you would integrate with a payment processor
+            alert('In a real implementation, this would process the card payment securely.');
+        });
+
+        // Simple card type detection for the icon
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            const cardNumber = e.target.value.replace(/\s/g, '');
+            const cardIcon = document.getElementById('card-type-icon');
+            
+            if (/^4/.test(cardNumber)) {
+                cardIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png';
+            } else if (/^5[1-5]/.test(cardNumber)) {
+                cardIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png';
+            } else if (/^3[47]/.test(cardNumber)) {
+                cardIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/American_Express_logo_2018.svg/1200px-American_Express_logo_2018.svg.png';
+            } else {
+                cardIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png';
+            }
+        });
+
+        // Format card number with spaces
+        document.getElementById('card-number').addEventListener('keyup', function(e) {
+            const value = e.target.value.replace(/\s/g, '');
+            if (value.length > 0) {
+                e.target.value = value.match(/.{1,4}/g).join(' ');
+            }
+        });
+
+        // Format expiry date
+        document.getElementById('expiry-date').addEventListener('keyup', function(e) {
+            const value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+        });
+    </script>
+</body>
+</html>

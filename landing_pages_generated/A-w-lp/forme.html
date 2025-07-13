@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --primary: #4f46e5;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --highlight: #f1f5f9;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+        
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--highlight);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem;
+            color: #1e293b;
+        }
+        
+        .subtitle {
+            opacity: 0.7;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        
+        .form {
+            padding: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+        }
+        
+        input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            color: var(--text);
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        input::placeholder {
+            color: #94a3b8;
+        }
+        
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9375rem;
+        }
+        
+        button:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1>Confirm Your Order</h1>
+            <p class="subtitle">We just need a few details</p>
+        </div>
+        
+        <div class="form">
+            <div class="input-group">
+                <label for="clientName">Full Name</label>
+                <input type="text" id="clientName" placeholder="Ayoub xx" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" placeholder="06 00 xx xx xx" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="city">Address</label>
+                <input type="text" id="city" placeholder="EX: N°12 Address example ..." required>
+            </div>
+            
+            <div class="input-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" min="1" value="1" required>
+            </div>
+            
+            <button type="submit" id="buyConfirme">Complete Purchase</button>
+        </div>
+    </div>
+</body>
+<script>
+    let path = new URLSearchParams(document.location.search);
+
+    document.getElementById('buyConfirme').addEventListener('click', () => {
+        async function submitOrder() {
+            const orderData = {
+                clientName: document.getElementById('clientName').value,
+                clientPhone: document.getElementById('phone').value,
+                city: document.getElementById('city').value,
+                quantity: document.getElementById('quantity').value,
+                productId: path.get("idp"),
+                paymentMode : path.get("payMode")
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (!response.ok) throw new Error('Erreur réseau');
+
+                const data = await response.json();
+                console.log('Succès:', data);
+                alert('Données envoyées avec succès!');
+                document.getElementById('clientName').value = "";
+                document.getElementById('phone').value = "";
+                document.getElementById('city').value = "";
+                document.getElementById('quantity').value = "";
+                window.location.href = `./index.html`
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Échec de l\'envoi des données');
+            }
+        }
+
+        if(path.get("payMode") !== 'Paypal' && path.get("payMode") !== 'Visa Card'){
+            submitOrder();
+        }else if(path.get("payMode") === 'Paypal'){
+            window.location.href = `./pages/paypal.html?idp=${path.get("idp")}&payMode=${path.get("payMode")}`
+        }else if(path.get("payMode") === 'Visa Card'){
+            window.location.href = `./pages/visaCard.html?idp=${path.get("idp")}&payMode=${path.get("payMode")}`
+        }
+    });
+
+</script>
+</html>
