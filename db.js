@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/ecom-merge')
+mongoose.connect('mongodb+srv://ecom-merge:123456789tahaja@cluster0.ihu8b8o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 .then(() => {
     console.log('Connected To Mongodb');
 })
